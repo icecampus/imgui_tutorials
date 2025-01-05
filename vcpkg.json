@@ -1,0 +1,6 @@
+{
+  "dependencies": [
+    "boost-program-options",
+    "magic-enum"
+  ]
+}
