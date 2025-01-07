@@ -1,17 +1,54 @@
 #include <iostream>
-#include <magic_enum/magic_enum.hpp>
+#include "imgui.h"
+#include "imgui-SFML.h"
 
-#include <boost/program_options/option.hpp>
-
-enum class Color : int{ RED1 = -10, BLUE = 0, GREEN = 10 };
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
 
 int main()
 {
-	std::cout << "Hello!!!\n";
+    sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "ImGui + SFML = <3");
+    window.setFramerateLimit(60);
+    ImGui::SFML::Init(window);
 
-	Color c1 = Color::RED1;
-	std::cout << magic_enum::enum_name(c1) << std::endl; // RED
+    sf::Clock deltaClock;
+    while (window.isOpen()) 
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            ImGui::SFML::ProcessEvent(window, event);
 
+            if (event.type == sf::Event::Closed) 
+            {
+                window.close();
+            }
+        }
+
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        //ImGui::ShowDemoWindow();
+
+        bool open = true;
+        ImGui::Begin("MyFirstWindow", &open);
+
+
+        if (ImGui::Button("Test"))
+        {
+            std::cout << "Button Pressed!\n";
+        }
+
+
+        ImGui::End();
+
+        window.clear();
+        ImGui::SFML::Render(window);
+        window.display();
+    }
+
+    ImGui::SFML::Shutdown();
 	
 	return 0;
 }
