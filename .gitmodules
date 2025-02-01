@@ -1,3 +1,4 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = git@github.com:icecampus/vcpkg.git
+	branch = imgui_sfml_update
